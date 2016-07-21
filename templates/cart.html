@@ -13,16 +13,18 @@
         </tr>
         </thead>
         <tbody>
+        {% for key, value in cart.items() %}
         <tr>
-            <td></td>
-            <td>5</td>
-            <td>$3.00</td>
-            <td>$15.00</td>
+            <td>{{ value[0] }}</td>
+            <td>{{ value[2] }}</td>
+            <td>${{ '%0.2f'| format(value[1]|float) }}</td>
+            <td>${{ '%0.2f'| format(value[3]|float)}}</td>
         </tr>
+        {% endfor %}
         </tbody>
     </table>
 
-    <h3>Total: $27.00</h3>
+    <h3> ${{ '%0.2f'| format(total|float) }}</h3>
 
     <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
 
