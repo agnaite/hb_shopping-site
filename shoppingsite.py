@@ -11,9 +11,7 @@ from flask import Flask, render_template, redirect, flash
 from flask import session
 import jinja2
 
-
 import melons
-
 
 app = Flask(__name__)
 
@@ -64,23 +62,17 @@ def shopping_cart():
     #making a new dictionary for cart contents
     shopping_cart = {}
     total = 0
-    
+
     # looping to add melon_type and price to shopping cart dictionary
     for melon_id in session["cart"]:
         melon = melons.get_by_id(melon_id)
-        shopping_cart[melon_id]= shopping_cart.get(melon_id, [melon.melon_type, melon.price, 0, 0.00])
-    
+        shopping_cart[melon_id] = shopping_cart.get(melon_id, [melon.melon_type, melon.price, 0, 0.00])
+
     #looping to increment quantity
     for melon_id in session["cart"]:
-        shopping_cart[melon_id][2] += 1 
+        shopping_cart[melon_id][2] += 1
         shopping_cart[melon_id][3] += shopping_cart[melon_id][1]
         total += shopping_cart[melon_id][1]
-
-
-
-
-
-
 
     return render_template("cart.html", cart=shopping_cart, total=total)
 
@@ -93,9 +85,6 @@ def add_to_cart(id):
     page and display a confirmation message: 'Successfully added to cart'.
     """
 
-    print id
-    print session.values()
- 
     session.setdefault("cart", []).append(id)
 
     flash("Added to cart")
